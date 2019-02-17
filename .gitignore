@@ -1,0 +1,16 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+/static/
+*.idea
+env
+media
+.cache
+._*
+*.log
+*.pot
+*.pyc
+.env
+/logs/
+*.vscode
+/log/
