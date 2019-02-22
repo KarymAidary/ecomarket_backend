@@ -62,4 +62,4 @@ def html_to_pdf_view(request):
 
 
 def pdf_template_view(request):
-    return render(request, template_name='stock/pdf_template.html')
+    return render(request, template_name='documents/invoice_template.html')

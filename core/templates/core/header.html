@@ -1,0 +1,16 @@
+<header>
+    <nav>
+        <h1><a href="{% url 'core:main' %}">Главная</a></h1>
+        <a href="{% url 'documents:documents' %}">Документы</a>
+        <a href="/admin/">Администрирование Django</a>
+    </nav>
+</header>
+
+<style>
+    nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+</style>
