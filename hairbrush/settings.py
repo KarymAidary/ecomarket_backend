@@ -84,16 +84,16 @@ WSGI_APPLICATION = 'hairbrush.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 # DATABASES = {
-    # 'default': env.db(
-    #     'APP_DB_URL'
-    # )
+# 'default': env.db(
+#     'APP_DB_URL'
+# )
 # }
 
-if not DEBUG:
-    import dj_database_url
-    DATABASES = {}
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
+
+import dj-database-url
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -145,4 +145,3 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_SECONDS = 1000000
     SECURE_FRAME_DENY = True
-
