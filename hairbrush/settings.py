@@ -24,13 +24,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+# SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 IS_PRODUCTION = (env('APP_IS_PRODUCTION', default=True) == 'True')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (env('APP_DEBUG', default=True))
+# DEBUG = (env('APP_DEBUG', default=True))
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
+DEBUG = False
 
+if not DEBUG:
+    ALLOWED_HOSTS = ['hairbrush.herokuapp.com', ]
+else:
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,12 +83,18 @@ WSGI_APPLICATION = 'hairbrush.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 DATABASES = {
-    'default': env.db(
-        'APP_DB_URL'
-    )
-}
+        'default': env.db(
+            'APP_DB_URL'
+        )
+    }
+
+if not DEBUG:
+    import dj_database_url
+
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -124,4 +135,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-

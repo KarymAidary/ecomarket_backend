@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render
+
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -61,5 +61,3 @@ def html_to_pdf_view(request):
     return response
 
 
-def pdf_template_view(request):
-    return render(request, template_name='documents/invoice_template.html')

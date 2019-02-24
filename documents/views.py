@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.template.loader import render_to_string
 
 from weasyprint import HTML
@@ -37,3 +38,7 @@ class InvoiceCreateView(FormView):
                                                                                         seller_company_name)
             return response
         return super().form_valid(form)
+
+
+def pdf_template_view(request):
+    return render(request, template_name='documents/waybill_template.html')
