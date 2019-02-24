@@ -83,15 +83,15 @@ WSGI_APPLICATION = 'hairbrush.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
+# DATABASES = {
     # 'default': env.db(
     #     'APP_DB_URL'
     # )
-}
+# }
 
 if not DEBUG:
     import dj_database_url
-
+    DATABASES = {}
     db_from_env = dj_database_url.config()
     DATABASES['default'].update(db_from_env)
 
