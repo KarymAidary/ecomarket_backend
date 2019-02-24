@@ -140,6 +140,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+LOGIN_REDIRECT_URL = 'core:main'
+LOGOUT_REDIRECT_URL = 'core:main'
+
 if HEROKU:
     CORS_REPLACE_HTTPS_REFERER = True
     HOST_SCHEME = "https://"

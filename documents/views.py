@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from weasyprint import HTML
 from django.core.files.storage import FileSystemStorage
@@ -8,11 +10,11 @@ from django.views.generic import TemplateView, FormView
 from .forms import InvoiceForm
 
 
-class DocumentsPageView(TemplateView):
+class DocumentsPageView(LoginRequiredMixin, TemplateView):
     template_name = 'documents/documents.html'
 
 
-class InvoiceCreateView(FormView):
+class InvoiceFormView(FormView):
     template_name = 'documents/invoce_create.html'
     form_class = InvoiceForm
     success_url = '/'
@@ -40,5 +42,6 @@ class InvoiceCreateView(FormView):
         return super().form_valid(form)
 
 
+@login_required
 def pdf_template_view(request):
     return render(request, template_name='documents/waybill_template.html')
