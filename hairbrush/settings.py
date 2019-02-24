@@ -24,15 +24,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = env('DJANGO_SECRET_KEY')
-SECRET_KEY = os.environ.get('SECRET_KEY')
+HEROKU = os.environ.get('HEROKU', default=False)
+if HEROKU:
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+else:
+    SECRET_KEY = env('DJANGO_SECRET_KEY')
+
 IS_PRODUCTION = (env('APP_IS_PRODUCTION', default=True) == 'True')
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = (env('APP_DEBUG', default=True))
+if HEROKU:
+    DEBUG = False
+else:
+    DEBUG = (env('APP_DEBUG', default=True))
 
-DEBUG = False
-
-if not DEBUG:
+if HEROKU:
     ALLOWED_HOSTS = ['hairbrush.herokuapp.com', ]
 else:
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
@@ -81,19 +86,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hairbrush.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-# DATABASES = {
-# 'default': env.db(
-#     'APP_DB_URL'
-# )
-# }
+if HEROKU:
+    import dj_database_url
 
-
-import dj_database_url
-
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES = {}
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+else:
+    # Database
+    # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+    DATABASES = {
+        'default': env.db(
+            'APP_DB_URL'
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -135,7 +140,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-if not DEBUG:
+if HEROKU:
     CORS_REPLACE_HTTPS_REFERER = True
     HOST_SCHEME = "https://"
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
