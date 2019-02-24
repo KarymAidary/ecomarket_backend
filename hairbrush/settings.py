@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'hairbrush.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {
-    'default': env.db(
-        'APP_DB_URL'
-    )
+    # 'default': env.db(
+    #     'APP_DB_URL'
+    # )
 }
 
 if not DEBUG:
