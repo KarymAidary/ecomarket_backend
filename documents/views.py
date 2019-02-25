@@ -14,7 +14,7 @@ class DocumentsPageView(LoginRequiredMixin, TemplateView):
     template_name = 'documents/documents.html'
 
 
-class InvoiceFormView(FormView):
+class InvoiceFormView(LoginRequiredMixin, FormView):
     template_name = 'documents/invoce_create.html'
     form_class = InvoiceForm
     success_url = '/'
