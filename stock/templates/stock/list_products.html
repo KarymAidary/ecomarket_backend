@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div>Кол-во: {{ object_list.count }}</div>
+    {% for product in object_list %}
+        {{ product.image }}
+        {{ product.name }}
+        {{ product.price }}
+        {{ product.amount }}
+        {{ product.vendor_code }}
+    {% endfor %}
+{% endblock %}

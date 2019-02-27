@@ -12,6 +12,9 @@ class Category(models.Model):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
+    def __str__(self):
+        return '%s' % self.name
+
 
 def category_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -35,6 +38,9 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Товары"
+
+    def __str__(self):
+        return '%s' % self.name
 
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):

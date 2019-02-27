@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <style>
+        .category-list {
+            margin: 0 auto;
+            width: 50%;
+        }
+    </style>
+    <h1>Кол-во:{{ object_list.count }}</h1>
+    <div class="category-list">
+        {% for category in object_list %}
+            <h3><a href="{% url 'stock:product_list' category.slug %}">{{ category.name }}</a></h3>
+        {% endfor %}
+    </div>
+{% endblock %}

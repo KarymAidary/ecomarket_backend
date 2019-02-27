@@ -3,7 +3,7 @@
         {% if user.is_authenticated %}
         <h1><a href="{% url 'core:main' %}">Главная</a></h1>
         <a href="{% url 'documents:documents' %}">Документы</a>
-        <a href="/admin/">Администрирование Django</a>
+        <a href="{% url 'stock:category_list' %}">Склад</a>
         <a href="{% url 'logout' %}">Выйти</a>
         {% else %}
 {#        <a href="{% url 'login' %}">Войти</a>#}

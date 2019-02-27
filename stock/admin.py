@@ -4,7 +4,6 @@ from .models import Category, Product
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Category._meta.fields]
-    exclude = ('slug',)
 
     class Meta:
         model = Category
@@ -12,7 +11,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Product._meta.fields]
-    exclude = ('slug', )
 
     class Meta:
         model = Product
