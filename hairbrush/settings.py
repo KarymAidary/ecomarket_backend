@@ -86,6 +86,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hairbrush.wsgi.application'
 
+if DEBUG is False:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'DEBUG' if DEBUG else 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': DEBUG,
+                'propagate': True,
+            },
+        },
+    }
+
 if HEROKU:
     import dj_database_url
 
