@@ -7,10 +7,8 @@ env
 media
 .cache
 ._*
-*.log
 *.pot
 *.pyc
 .env
-/logs/
 *.vscode
 /log/
