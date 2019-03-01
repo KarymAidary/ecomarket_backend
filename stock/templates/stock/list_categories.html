@@ -37,7 +37,7 @@
         }
 
         .customers tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: seashell;
         }
         .customers tr td:first-child {
             text-align: center;
@@ -56,11 +56,11 @@
     </style>
     <div class="menu-config-stock">
         <a href="{% url 'stock:category_create' %}">Добавить категорию</a>
-        <a href="">Добавить продукт</a>
+        <a href="{% url 'stock:product_create' %}">Добавить продукт</a>
     </div>
     <div class="category-list">
         {% for category in object_list %}
-            <div class="category-item"><a href="{% url 'stock:product_list' category.id %}">{{ category.name }}</a>
+            <div class="category-item"><a href="{% url 'stock:product_list' category.pk %}">{{ category.name }}</a>
             </div>
         {% endfor %}
     </div>
@@ -76,26 +76,19 @@
                 <th>Количество</th>
                 <th>Оптовая цена</th>
             </tr>
-            {% for category in object_list %}
-                {% for product in category.category.all %}
-
-                        <tr>
-                            <td><a href="{% url 'stock:product_list' category.pk %}">{{ forloop.counter }}</a></td>
-                            <td><img src="{{ product.image }}"></td>
-                            <td>{{ product.category }}</td>
-                            <td>{{ product.vendor_code }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.amount }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.trade_price }}</td>
-                        </tr>
-                {% endfor %}
+            {% for product in product_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><img src="{{ product.image }}"></td>
+                    <td><a href="{% url 'stock:product_list' product.category.pk %}">{{ product.category }}</a></td>
+                    <td>{{ product.vendor_code }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.amount }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.trade_price }}</td>
+                </tr>
             {% endfor %}
-
         </table>
 
     </div>
-    <div>
-    </div>
-
 {% endblock %}

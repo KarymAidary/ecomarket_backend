@@ -46,16 +46,22 @@ class CategoryListView(ListView):
     template_name = 'stock/list_categories.html'
     model = Category
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context['product_list'] = Product.objects.all().order_by('-created_date')
+        return context
+
 
 class CategoryCreateView(CreateView):
     template_name = 'stock/create_category.html'
     model = Category
     fields = ['name', ]
-    success_url = '/stock/category/'
+    success_url = '/stock/'
 
 
 class ProductListView(ListView):
     template_name = 'stock/list_products.html'
+    model = Product
 
     def get_queryset(self):
         queryset = get_list_or_404(
@@ -65,3 +71,6 @@ class ProductListView(ListView):
 
 class ProductCreateView(CreateView):
     template_name = 'stock/create_product.html'
+    model = Product
+    fields = ['category', 'vendor_code', 'name', 'amount', 'price', 'trade_price']
+    success_url = '/stock/'

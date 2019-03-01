@@ -1,7 +1,45 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-    <form method="post">
-        {{ form.as_p }}
+    <style>
+        .product_form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product_form label {
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        .product_form select {
+            width: 50%;
+            margin: 8px auto;
+            border: 1px solid #ccc;
+        }
+
+        .product_form input {
+            width: 50%;
+            margin: 8px auto;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 6px 0;
+        }
+
+        input[type=submit] {
+            width: 50%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px auto;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <form class="product_form" method="post">
+    {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Добавить">
     </form>
 {% endblock %}
