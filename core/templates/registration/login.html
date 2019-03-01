@@ -1,12 +1,9 @@
-{% extends 'core/base.html' %}
-
 {% block content %}
     <style>
         .login_form {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 50vh;
         }
 
         .login_form label {
@@ -38,16 +35,23 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .header-page h2 {
             width: 50%;
             margin: 0 auto;
             text-align: center;
         }
+
+        .mt-50 {
+            margin-top: 15%;
+        }
     </style>
+    <div class="mt-50">
         <div class="header-page"><h2>Вход</h2></div>
         <form class="login_form" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Войти">
         </form>
+    </div>
 {% endblock %}
