@@ -7,9 +7,6 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 from .models import Product, Category
-from django.template.loader import render_to_string
-
-from weasyprint import HTML
 
 
 def pdf_view(request):
@@ -50,12 +47,19 @@ class CategoryListView(ListView):
     model = Category
 
 
+class CategoryCreateView(CreateView):
+    template_name = 'stock/create_category.html'
+    model = Category
+    fields = ['name', ]
+    success_url = '/stock/category/'
+
+
 class ProductListView(ListView):
     template_name = 'stock/list_products.html'
 
     def get_queryset(self):
         queryset = get_list_or_404(
-            Product.objects.filter(category__slug=self.kwargs.get("product")))
+            Product.objects.filter(category__pk=self.kwargs.get("pk")))
         return queryset
 
 

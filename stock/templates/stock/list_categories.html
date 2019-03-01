@@ -1,16 +1,101 @@
 {% extends 'core/base.html' %}
-
 {% block content %}
     <style>
         .category-list {
-            margin: 0 auto;
-            width: 50%;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-evenly;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .category-item {
+            padding: 5px 10px;
+        }
+
+        .menu-config-stock {
+            margin: 20px auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .menu-config-stock a {
+            padding: 5px 10px;
+        }
+
+
+        .customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .customers td, .customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .customers tr td:first-child {
+            text-align: center;
+        }
+        .customers tr:hover {
+            background-color: #ddd;
+        }
+
+        .customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
         }
     </style>
-    <h1>Кол-во:{{ object_list.count }}</h1>
+    <div class="menu-config-stock">
+        <a href="{% url 'stock:category_create' %}">Добавить категорию</a>
+        <a href="">Добавить продукт</a>
+    </div>
     <div class="category-list">
         {% for category in object_list %}
-            <h3><a href="{% url 'stock:product_list' category.slug %}">{{ category.name }}</a></h3>
+            <div class="category-item"><a href="{% url 'stock:product_list' category.id %}">{{ category.name }}</a>
+            </div>
         {% endfor %}
     </div>
+    <div class="product-list">
+        <table class="customers">
+            <tr>
+                <th>Номер</th>
+                <th>Картинка</th>
+                <th>Категория</th>
+                <th>Артикул</th>
+                <th>Имя</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Оптовая цена</th>
+            </tr>
+            {% for category in object_list %}
+                {% for product in category.category.all %}
+
+                        <tr>
+                            <td><a href="{% url 'stock:product_list' category.pk %}">{{ forloop.counter }}</a></td>
+                            <td><img src="{{ product.image }}"></td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.vendor_code }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.amount }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.trade_price }}</td>
+                        </tr>
+                {% endfor %}
+            {% endfor %}
+
+        </table>
+
+    </div>
+    <div>
+    </div>
+
 {% endblock %}
