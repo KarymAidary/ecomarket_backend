@@ -42,6 +42,7 @@ class InvoiceFormView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
+@login_required
 def html_to_pdf_view(request):
     html_string = render_to_string('documents/waybill_template.html')
 

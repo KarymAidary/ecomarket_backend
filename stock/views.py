@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import get_list_or_404
 from django.views.generic import CreateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -42,7 +43,7 @@ def write_pdf_view(request):
     return response
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     template_name = 'stock/list_categories.html'
     model = Category
 
@@ -52,14 +53,14 @@ class CategoryListView(ListView):
         return context
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     template_name = 'stock/create_category.html'
     model = Category
     fields = ['name', ]
     success_url = '/stock/'
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     template_name = 'stock/list_products.html'
     model = Product
 
@@ -69,7 +70,7 @@ class ProductListView(ListView):
         return queryset
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'stock/create_product.html'
     model = Product
     fields = ['category', 'vendor_code', 'name', 'amount', 'price', 'trade_price']
